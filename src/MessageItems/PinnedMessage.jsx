@@ -8,45 +8,19 @@ import {
   TextField,
 } from "@mui/material";
 import "./index.css";
-import GroupChannelHandler from "@sendbird/uikit-react/handlers/GroupChannelHandler";
-import { useChannelContext } from "@sendbird/uikit-react/Channel/context";
 
-export default function UserMessage(props) {
-  const {
-    message,
-    userId,
-    updateUserMessage,
-    channel,
-    sb,
-    pinMessage, //-> remove if pinMessage function stays in this file
-    unpinMessage,
-  } = props;
+export default function PinnedMessage(props) {
+  const { message, userId, updateUserMessage, channel, sb, unpinMessage, getPinnedMessageList } =
+    props;
   const [messageText, changeMessageText] = useState(message.message);
   const [messageOptions, setMessageOptions] = useState(false);
   const [pressedUpdate, setPressedUpdate] = useState(false);
-  const channelStore = useChannelContext();
 
   const clickedDropdown = () => {
     if (message.sender.userId === userId) {
       setMessageOptions(!messageOptions);
     }
   };
-
-  // let UNIQUE_HANDLER_ID = `${message.messageId}`;
-  // const groupChannelHandler = new GroupChannelHandler();
-  // sb.groupChannel.addGroupChannelHandler(
-  //   UNIQUE_HANDLER_ID,
-  //   groupChannelHandler
-  // );
-  // groupChannelHandler.onPinnedMessageUpdated = async (channel, event) => {
-  //  // console.log("channel", channel);
-  //   //console.log("event=", event);
-  //   console.log('msgg ids',channel.pinnedMesageIds);
-  //   messagesDispatcher({
-  //     type: "ON_MESSAGE_UPDATED",
-  //     payload: { channel, message },
-  //   });
-  // };
 
   async function onPinMessage(message) {
     await channel.pinMessage(message.messageId);
@@ -56,6 +30,24 @@ export default function UserMessage(props) {
   const onDeleteMessage = () => {
     channel.deleteMessage(message);
   };
+
+  const updateMessageText=(messageId, messageText)=>{
+    const userMessageParams = {};
+    userMessageParams.message = messageText;
+    updateUserMessage(channel, messageId, userMessageParams)
+      .then((message) => {
+        console.log("message=", message);
+      })
+      .catch((error) => {
+        console.log("error=", error);
+      });
+
+      getPinnedMessageList()
+      setPressedUpdate(false)
+      setMessageOptions(!messageOptions);
+
+      
+  }
 
   return (
     <div className="user-message">
@@ -118,7 +110,7 @@ export default function UserMessage(props) {
                     <li
                       className="dropdown__menu-item"
                       onClick={() =>
-                        updateUserMessage(message.messageId, messageText)
+                        updateMessageText(message.messageId, messageText)
                       }
                     >
                       <span className="dropdown__menu-item-text">Save</span>
@@ -151,16 +143,6 @@ export default function UserMessage(props) {
                       <span className="dropdown__menu-item-text">Delete</span>
                     </li>
                   )}
-                  {!pressedUpdate &&
-                    !channel.pinnedMessageIds.includes(message.messageId) && (
-                      <li
-                        id="suggest_task_button"
-                        className="suggest_task_button"
-                        onClick={() => onPinMessage(message)}
-                      >
-                        <span className="suggest_task_button">Pin Message</span>
-                      </li>
-                    )}
                   {!pressedUpdate &&
                     channel.pinnedMessageIds.includes(message.messageId) && (
                       <li

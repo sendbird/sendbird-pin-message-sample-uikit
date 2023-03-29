@@ -8,7 +8,7 @@ import {
 } from "@sendbird/uikit-react/";
 import CustomizedMessageItem from "./CustomizedMessageItem";
 import CustomizedMessageInput from "./CustomizedMessageInput";
-import PinnedMessage from "./PinnedMessage";
+import SettingsPinnedMessagesOption from "./SettingsPinnedMessagesOption";
 
 function CustomizedApp({ userId, sb }) {
   const [showSettings, setShowSettings] = useState(false);
@@ -35,9 +35,10 @@ function CustomizedApp({ userId, sb }) {
 
   async function unpinMessage(message) {
     await channel.unpinMessage(message.messageId);
+    getPinnedMessageList();
   }
 
-  //called when a channel is selected -> each time a channels selected, load pinnedMsgs
+  //each time a channels selected, load pinnedMsgs
   async function getPinnedMessageList() {
     //everytime this func is called, reset pinnedMessages so you can get updated list of msgs
     setPinnedMessages([]);
@@ -53,50 +54,6 @@ function CustomizedApp({ userId, sb }) {
           };
           const message = await sb.message.getMessage(params);
           setPinnedMessages((oldArray) => [...oldArray, message]);
-          // if (pinnedMessages.length === 0) {
-          //   console.log("2. If pinned messages IS 0, add message");
-          //   setPinnedMessages((oldArray) => [...oldArray, message]);
-          // }
-
-          //if there is an array of pinnedMsgs,
-          //go through pinnedMsgs & if msg.msgId isnt in there THEN ADD IT
-
-          // OR
-          //everytime getPinnedMsgList() is called, reset pinnedMsgs array with the messages
-
-          //   var status = 'Not exist'
-          //   for (var i = 0; i < pinnedMessages.length; i++) {
-          //     console.log("3.Looping pinnedMsgs, msg=", pinnedMessages[i]);
-          //     if (pinnedMessages[i].messageId === message.messageId) {
-          //           console.log("4. SETTINGS STATUS TO EXIST");
-          //       console.log(
-          //         "5. pinnnedMsgID for loop=",
-          //         pinnedMessages[i].messageId
-          //       );
-          //       console.log("6. Current MsgId checking=", message.messageId);
-          //         status = 'Exist';
-          //         break;
-          //     }
-
-          //   if(status === 'Not exist'){
-          //     console.log('7. STATUS = NOT EXIST')
-          //     setPinnedMessages((oldArray) => [...oldArray, message]);
-          //   }
-          // }
-
-          // for (var i = 0; i < pinnedMessages.length; i++) {
-          //   console.log("3.Looping pinnedMsgs, msg=", pinnedMessages[i]);
-          //   if (pinnedMessages[i].messageId !== message.messageId) {
-          //     console.log("4. pinnedMsg ID !== current msgId");
-          //     console.log(
-          //       "5. pinnnedMsgID for loop=",
-          //       pinnedMessages[i].messageId
-          //     );
-          //     console.log("6. Current MsgId checking=", message.messageId);
-          //     //Then add message to the array
-          //     setPinnedMessages((oldArray) => [...oldArray, message]);
-          //   }
-          // }
         })
       );
     }
@@ -150,13 +107,13 @@ function CustomizedApp({ userId, sb }) {
               hideSettingsBar();
             }}
           />
-          <PinnedMessage
+          <SettingsPinnedMessagesOption
             // message={message}
             userId={userId}
             channel={channel}
             updateUserMessage={updateUserMessage}
             sb={sb}
-            pinMessage={pinMessage}
+            // pinMessage={pinMessage}
             unpinMessage={unpinMessage}
             getPinnedMessageList={getPinnedMessageList}
             pinnedMessages={pinnedMessages}
