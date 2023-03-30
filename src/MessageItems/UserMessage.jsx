@@ -33,28 +33,6 @@ export default function UserMessage(props) {
     }
   };
 
-  // let UNIQUE_HANDLER_ID = `${message.messageId}`;
-  // const groupChannelHandler = new GroupChannelHandler();
-  // sb.groupChannel.addGroupChannelHandler(
-  //   UNIQUE_HANDLER_ID,
-  //   groupChannelHandler
-  // );
-  // groupChannelHandler.onPinnedMessageUpdated = async (channel, event) => {
-  //  // console.log("channel", channel);
-  //   //console.log("event=", event);
-  //   console.log('msgg ids',channel.pinnedMesageIds);
-  //   messagesDispatcher({
-  //     type: "ON_MESSAGE_UPDATED",
-  //     payload: { channel, message },
-  //   });
-  // };
-
-  // async function onPinMessage(message) {
-  //   await channel.pinMessage(message.messageId);
-  //   getPinnedMessageList()
-  //   setMessageOptions(!messageOptions);
-  // }
-
   const onDeleteMessage = () => {
     channel.deleteMessage(message);
   };

@@ -10,8 +10,15 @@ import {
 import "./index.css";
 
 export default function PinnedMessage(props) {
-  const { message, userId, updateUserMessage, channel, sb, unpinMessage, getPinnedMessageList } =
-    props;
+  const {
+    message,
+    userId,
+    updateUserMessage,
+    channel,
+    sb,
+    unpinMessage,
+    getPinnedMessageList,
+  } = props;
   const [messageText, changeMessageText] = useState(message.message);
   const [messageOptions, setMessageOptions] = useState(false);
   const [pressedUpdate, setPressedUpdate] = useState(false);
@@ -31,22 +38,19 @@ export default function PinnedMessage(props) {
     channel.deleteMessage(message);
   };
 
-  const updateMessageText=(messageId, messageText)=>{
+  async function updateMessageText(messageId, messageText) {
     const userMessageParams = {};
     userMessageParams.message = messageText;
-    updateUserMessage(channel, messageId, userMessageParams)
+    await updateUserMessage(channel, messageId, userMessageParams)
       .then((message) => {
         console.log("message=", message);
+        getPinnedMessageList();
       })
       .catch((error) => {
         console.log("error=", error);
       });
-
-      getPinnedMessageList()
-      setPressedUpdate(false)
-      setMessageOptions(!messageOptions);
-
-      
+    setPressedUpdate(false);
+    setMessageOptions(!messageOptions);
   }
 
   return (
