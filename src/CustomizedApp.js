@@ -31,8 +31,11 @@ function CustomizedApp({ userId, sb }) {
 
   async function pinMessage(message) {
     await channel.pinMessage(message.messageId);
+    getPinnedMessageList();
   }
 
+  //Error -> react-dom.development.js:86 Warning: Cannot update a component (`Accordion`) while rendering a different component (`Context.Consumer`).
+  // To locate the bad setState() call inside `Context.Consumer`, follow the stack trace as described in
   async function unpinMessage(message) {
     await channel.unpinMessage(message.messageId);
     getPinnedMessageList();
@@ -88,6 +91,7 @@ function CustomizedApp({ userId, sb }) {
               sb={sb}
               pinMessage={pinMessage}
               unpinMessage={unpinMessage}
+              getPinnedMessageList={getPinnedMessageList}
             />
           )}
           renderMessageInput={() => (
@@ -108,12 +112,10 @@ function CustomizedApp({ userId, sb }) {
             }}
           />
           <SettingsPinnedMessagesOption
-            // message={message}
             userId={userId}
             channel={channel}
             updateUserMessage={updateUserMessage}
             sb={sb}
-            // pinMessage={pinMessage}
             unpinMessage={unpinMessage}
             getPinnedMessageList={getPinnedMessageList}
             pinnedMessages={pinnedMessages}

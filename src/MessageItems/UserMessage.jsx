@@ -20,6 +20,7 @@ export default function UserMessage(props) {
     sb,
     pinMessage, //-> remove if pinMessage function stays in this file
     unpinMessage,
+    getPinnedMessageList
   } = props;
   const [messageText, changeMessageText] = useState(message.message);
   const [messageOptions, setMessageOptions] = useState(false);
@@ -48,10 +49,11 @@ export default function UserMessage(props) {
   //   });
   // };
 
-  async function onPinMessage(message) {
-    await channel.pinMessage(message.messageId);
-    setMessageOptions(!messageOptions);
-  }
+  // async function onPinMessage(message) {
+  //   await channel.pinMessage(message.messageId);
+  //   getPinnedMessageList()
+  //   setMessageOptions(!messageOptions);
+  // }
 
   const onDeleteMessage = () => {
     channel.deleteMessage(message);
@@ -90,7 +92,7 @@ export default function UserMessage(props) {
               <TextField
                 multiline
                 variant="filled"
-                rowsMax={4}
+                rowsmax={4}
                 value={messageText}
                 onChange={(event) => {
                   changeMessageText(event.target.value);
@@ -156,7 +158,10 @@ export default function UserMessage(props) {
                       <li
                         id="suggest_task_button"
                         className="suggest_task_button"
-                        onClick={() => onPinMessage(message)}
+                        onClick={() => {
+                          pinMessage(message)
+                          setMessageOptions(!messageOptions);
+                        }}
                       >
                         <span className="suggest_task_button">Pin Message</span>
                       </li>

@@ -5,7 +5,16 @@ import UserMessage from "./MessageItems/UserMessage";
 import "./index.css";
 
 export default function CustomizedMessageItem(props) {
-  const { message, userId, channel, updateUserMessage, sb, pinMessage,unpinMessage } = props;
+  const {
+    message,
+    userId,
+    channel,
+    updateUserMessage,
+    sb,
+    pinMessage,
+    unpinMessage,
+    getPinnedMessageList,
+  } = props;
 
   const MessageHOC = useMemo(() => {
     if (message.isAdminMessage && message.isAdminMessage()) {
@@ -37,6 +46,7 @@ export default function CustomizedMessageItem(props) {
           sb={sb}
           pinMessage={pinMessage}
           unpinMessage={unpinMessage}
+          getPinnedMessageList={getPinnedMessageList}
         />
       );
     }

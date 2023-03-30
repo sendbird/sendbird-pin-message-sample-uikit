@@ -72,3 +72,8 @@
   color: white !important;
   background-color: #6210cc;
 }
+
+.no-pinned-messages-title{
+  margin-left: 26px;
+  font-weight: normal;
+}

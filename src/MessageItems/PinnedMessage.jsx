@@ -82,7 +82,7 @@ export default function PinnedMessage(props) {
               <TextField
                 multiline
                 variant="filled"
-                rowsMax={4}
+                rowsmax={4}
                 value={messageText}
                 onChange={(event) => {
                   changeMessageText(event.target.value);

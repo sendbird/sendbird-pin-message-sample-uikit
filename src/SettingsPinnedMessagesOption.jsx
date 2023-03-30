@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import "./index.css";
 import PinnedMessageList from "./MessageItems/PinnedMessageList";
-import UserMessage from "./MessageItems/UserMessage";
 
 export default function SettingsPinnedMessagesOption({
   userId,
   channel,
   updateUserMessage,
   sb,
-  // pinMessage,
   unpinMessage,
    getPinnedMessageList,
   pinnedMessages,
@@ -45,7 +43,6 @@ export default function SettingsPinnedMessagesOption({
           Pinned Messages
         </span>
       </div>
-      {showPinnedMessages && pinnedMessages.length !== 0 && (
         <PinnedMessageList
           showPinnedMessageList={showPinnedMessageList}
           pinnedMessages={pinnedMessages}
@@ -56,12 +53,6 @@ export default function SettingsPinnedMessagesOption({
           unpinMessage={unpinMessage}
           getPinnedMessageList={getPinnedMessageList}
         />
-      )}
-      {showPinnedMessages && pinnedMessages.length === 0 && (
-        <div>
-          <h4>No pinned messages</h4>
-        </div>
-      )}
     </div>
   );
 }
