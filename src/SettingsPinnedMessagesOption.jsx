@@ -6,14 +6,13 @@ export default function SettingsPinnedMessagesOption({
   userId,
   channel,
   updateUserMessage,
-  sb,
   unpinMessage,
   getPinnedMessageList,
   pinnedMessages,
+  setPinnedMessages,
 }) {
   const [showPinnedMessages, setShowPinnedMessages] = useState(false);
   function showPinnedMessageList() {
-    console.log("showpinnedmsg", showPinnedMessages);
     setShowPinnedMessages(!showPinnedMessages);
     if (showPinnedMessages) {
       getPinnedMessageList();
@@ -48,12 +47,11 @@ export default function SettingsPinnedMessagesOption({
         <PinnedMessageList
           showPinnedMessageList={showPinnedMessageList}
           pinnedMessages={pinnedMessages}
+          setPinnedMessages={setPinnedMessages}
           userId={userId}
           updateUserMessage={updateUserMessage}
           channel={channel}
-          sb={sb}
           unpinMessage={unpinMessage}
-          getPinnedMessageList={getPinnedMessageList}
         />
       )}
     </div>

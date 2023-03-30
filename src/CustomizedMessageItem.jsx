@@ -10,10 +10,10 @@ export default function CustomizedMessageItem(props) {
     userId,
     channel,
     updateUserMessage,
-    sb,
     pinMessage,
     unpinMessage,
-    getPinnedMessageList,
+    pinnedMessages,
+    setPinnedMessages,
   } = props;
 
   const MessageHOC = useMemo(() => {
@@ -43,15 +43,15 @@ export default function CustomizedMessageItem(props) {
           userId={userId}
           updateUserMessage={updateUserMessage}
           channel={channel}
-          sb={sb}
           pinMessage={pinMessage}
           unpinMessage={unpinMessage}
-          getPinnedMessageList={getPinnedMessageList}
+          pinnedMessages={pinnedMessages}
+          setPinnedMessages={setPinnedMessages}
         />
       );
     }
     return () => <div />;
-  }, [message, userId, channel, updateUserMessage, sb, pinMessage]);
+  }, [message, userId, channel, updateUserMessage, pinMessage]);
 
   return (
     <div id={message.messageId} className="customized-message-item">

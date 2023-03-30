@@ -8,8 +8,6 @@ import {
   TextField,
 } from "@mui/material";
 import "./index.css";
-import GroupChannelHandler from "@sendbird/uikit-react/handlers/GroupChannelHandler";
-import { useChannelContext } from "@sendbird/uikit-react/Channel/context";
 
 export default function UserMessage(props) {
   const {
@@ -17,15 +15,14 @@ export default function UserMessage(props) {
     userId,
     updateUserMessage,
     channel,
-    sb,
-    pinMessage, //-> remove if pinMessage function stays in this file
+    pinMessage,
     unpinMessage,
-    getPinnedMessageList
+    pinnedMessages,
+    setPinnedMessages,
   } = props;
   const [messageText, changeMessageText] = useState(message.message);
   const [messageOptions, setMessageOptions] = useState(false);
   const [pressedUpdate, setPressedUpdate] = useState(false);
-  const channelStore = useChannelContext();
 
   const clickedDropdown = () => {
     if (message.sender.userId === userId) {
@@ -36,6 +33,25 @@ export default function UserMessage(props) {
   const onDeleteMessage = () => {
     channel.deleteMessage(message);
   };
+
+  async function updateMessageText(messageId, messageText) {
+    const userMessageParams = {};
+    userMessageParams.message = messageText;
+    await updateUserMessage(channel, messageId, userMessageParams)
+      .then((message) => {
+        let updatedPinnedMessagesList = pinnedMessages.map((pinnedMessage) => {
+          return pinnedMessage.messageId !== messageId
+            ? pinnedMessage
+            : message;
+        });
+        setPinnedMessages(updatedPinnedMessagesList);
+      })
+      .catch((error) => {
+        console.log("error=", error);
+      });
+    setPressedUpdate(false);
+    setMessageOptions(!messageOptions);
+  }
 
   return (
     <div className="user-message">
@@ -98,7 +114,7 @@ export default function UserMessage(props) {
                     <li
                       className="dropdown__menu-item"
                       onClick={() =>
-                        updateUserMessage(message.messageId, messageText)
+                        updateMessageText(message.messageId, messageText)
                       }
                     >
                       <span className="dropdown__menu-item-text">Save</span>
@@ -137,7 +153,7 @@ export default function UserMessage(props) {
                         id="suggest_task_button"
                         className="suggest_task_button"
                         onClick={() => {
-                          pinMessage(message)
+                          pinMessage(message);
                           setMessageOptions(!messageOptions);
                         }}
                       >

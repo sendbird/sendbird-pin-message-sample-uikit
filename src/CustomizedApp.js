@@ -34,20 +34,17 @@ function CustomizedApp({ userId, sb }) {
     getPinnedMessageList();
   }
 
-  //Error -> react-dom.development.js:86 Warning: Cannot update a component (`Accordion`) while rendering a different component (`Context.Consumer`).
-  // To locate the bad setState() call inside `Context.Consumer`, follow the stack trace as described in
   async function unpinMessage(message) {
     await channel.unpinMessage(message.messageId);
-    getPinnedMessageList();
+    let updatedPinnedMessagesList = pinnedMessages.filter((pinnedMessage) => {
+      return pinnedMessage.messageId !== message.messageId;
+    });
+    setPinnedMessages(updatedPinnedMessagesList);
   }
 
-  //each time a channels selected, load pinnedMsgs
   async function getPinnedMessageList() {
-    //everytime this func is called, reset pinnedMessages so you can get updated list of msgs
     setPinnedMessages([]);
     if (channel && channel.pinnedMessageIds) {
-      console.log("1. Calling getPinnedMessageList");
-      console.log("1A. channel.pinnedMessageIds", channel.pinnedMessageIds);
       await Promise.all(
         channel.pinnedMessageIds.map(async (messageId) => {
           const params = {
@@ -88,10 +85,10 @@ function CustomizedApp({ userId, sb }) {
               userId={userId}
               channel={channel}
               updateUserMessage={updateUserMessage}
-              sb={sb}
               pinMessage={pinMessage}
               unpinMessage={unpinMessage}
-              getPinnedMessageList={getPinnedMessageList}
+              pinnedMessages={pinnedMessages}
+              setPinnedMessages={setPinnedMessages}
             />
           )}
           renderMessageInput={() => (
@@ -115,10 +112,10 @@ function CustomizedApp({ userId, sb }) {
             userId={userId}
             channel={channel}
             updateUserMessage={updateUserMessage}
-            sb={sb}
             unpinMessage={unpinMessage}
             getPinnedMessageList={getPinnedMessageList}
             pinnedMessages={pinnedMessages}
+            setPinnedMessages={setPinnedMessages}
           />
         </div>
       )}

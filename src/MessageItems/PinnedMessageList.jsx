@@ -4,12 +4,11 @@ import PinnedMessage from "./PinnedMessage";
 export default function PinnedMessageList({
   showPinnedMessageList,
   pinnedMessages,
+  setPinnedMessages,
   userId,
   updateUserMessage,
   channel,
-  sb,
   unpinMessage,
-  getPinnedMessageList,
 }) {
   return (
     <div className="bg-modal" style={{ display: "flex" }}>
@@ -29,12 +28,12 @@ export default function PinnedMessageList({
                 className="sendbird-channel-settings_pin-message-wrapper"
               >
                 <PinnedMessage
-                  getPinnedMessageList={getPinnedMessageList}
+                  pinnedMessages={pinnedMessages}
+                  setPinnedMessages={setPinnedMessages}
                   message={message}
                   userId={userId}
                   updateUserMessage={updateUserMessage}
                   channel={channel}
-                  sb={sb}
                   unpinMessage={unpinMessage}
                 />
               </div>
