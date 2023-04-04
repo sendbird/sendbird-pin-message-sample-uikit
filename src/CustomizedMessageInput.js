@@ -12,7 +12,7 @@ import useSendbirdStateContext from "@sendbird/uikit-react/useSendbirdStateConte
 import sendbirdSelectors from "@sendbird/uikit-react/sendbirdSelectors";
 import { useChannelContext } from "@sendbird/uikit-react/Channel/context";
 
-function CustomizedMessageInput({ sb, getPinnedMessageList }) {
+function CustomizedMessageInput({ pinMessage }) {
   const store = useSendbirdStateContext();
   const sendUserMessage = sendbirdSelectors.getSendUserMessage(store);
   const sendFileMessage = sendbirdSelectors.getSendFileMessage(store);
@@ -51,7 +51,7 @@ function CustomizedMessageInput({ sb, getPinnedMessageList }) {
     }
   };
 
-  const checkSendUserMessage_ = (event) => {
+  const checkSendUserMessage = (event) => {
     if (sendingPinnedMessage) {
       sendPinnedMessage();
     } else {
@@ -72,9 +72,7 @@ function CustomizedMessageInput({ sb, getPinnedMessageList }) {
     userMessageParams.message = inputText.substring(5);
     sendUserMessage(channel, userMessageParams)
       .onSucceeded(async (message) => {
-        await channel.pinMessage(message.messageId);
-        getPinnedMessageList();
-
+        pinMessage(message.messageId);
         setInputText("");
       })
       .onFailed((error) => {
@@ -94,7 +92,7 @@ function CustomizedMessageInput({ sb, getPinnedMessageList }) {
           onChange={handleChange}
           onKeyPress={(event) => {
             if (event.code === "Enter") {
-              checkSendUserMessage_();
+              checkSendUserMessage();
             }
           }}
           labelwidth={105}
@@ -123,7 +121,7 @@ function CustomizedMessageInput({ sb, getPinnedMessageList }) {
                   </label>
                 </div>
               ) : (
-                <IconButton disabled={disabled} onClick={checkSendUserMessage_}>
+                <IconButton disabled={disabled} onClick={checkSendUserMessage}>
                   <SendIcon color={disabled ? "disabled" : "primary"} />
                 </IconButton>
               )}
