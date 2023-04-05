@@ -92,9 +92,7 @@ function CustomizedApp({ userId, sb }) {
             />
           )}
           renderMessageInput={() => (
-            <CustomizedMessageInput
-              pinMessage={pinMessage}
-            />
+            <CustomizedMessageInput pinMessage={pinMessage} />
           )}
         />
       </div>

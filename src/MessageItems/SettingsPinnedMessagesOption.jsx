@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./index.css";
-import PinnedMessageList from "./MessageItems/PinnedMessageList";
+import PinnedMessageList from "./PinnedMessageList";
 import IconButton from "@mui/material/IconButton";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons/faEllipsisV";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
