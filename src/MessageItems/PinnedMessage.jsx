@@ -57,14 +57,14 @@ export default function PinnedMessage(props) {
   }
 
   return (
-    <div className="user-message">
+    <div className="pinned-message">
       <Card>
         <CardHeader
           avatar={
             message.sender ? (
               <Avatar alt="Us" src={message.sender.plainProfileUrl} />
             ) : (
-              <Avatar className="user-message__avatar">Us</Avatar>
+              <Avatar className="pinned-message__avatar">Us</Avatar>
             )
           }
           title={
@@ -85,7 +85,7 @@ export default function PinnedMessage(props) {
             </Typography>
           )}
           {pressedUpdate && (
-            <div className="user-message__text-area">
+            <div className="pinned-message__text-area">
               <TextField
                 multiline
                 variant="filled"
@@ -98,7 +98,7 @@ export default function PinnedMessage(props) {
             </div>
           )}
         </CardContent>
-        <button className="user-message__options-btn" onClick={clickedDropdown}>
+        <button className="pinned-message__options-btn" onClick={clickedDropdown}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
             <path
               className="icon-more_svg__fill"
@@ -153,14 +153,14 @@ export default function PinnedMessage(props) {
                   {!pressedUpdate &&
                     channel.pinnedMessageIds.includes(message.messageId) && (
                       <li
-                        id="suggest_task_button"
-                        className="suggest_task_button"
+                        id="unpin_message_button"
+                        className="unpin_message_button"
                         onClick={() => {
                           unpinMessage(message);
                           setMessageOptions(!messageOptions);
                         }}
                       >
-                        <span className="suggest_task_button">
+                        <span className="unpin_message_text">
                           Unpin Message
                         </span>
                       </li>

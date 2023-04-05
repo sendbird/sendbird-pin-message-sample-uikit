@@ -150,27 +150,27 @@ export default function UserMessage(props) {
                   {!pressedUpdate &&
                     !channel.pinnedMessageIds.includes(message.messageId) && (
                       <li
-                        id="suggest_task_button"
-                        className="suggest_task_button"
+                        id="pin_message_button"
+                        className="pin_message_button"
                         onClick={() => {
                           pinMessage(message);
                           setMessageOptions(!messageOptions);
                         }}
                       >
-                        <span className="suggest_task_button">Pin Message</span>
+                        <span className="pin_message_text">Pin Message</span>
                       </li>
                     )}
                   {!pressedUpdate &&
                     channel.pinnedMessageIds.includes(message.messageId) && (
                       <li
-                        id="suggest_task_button"
-                        className="suggest_task_button"
+                        id="unpin_message_button"
+                        className="unpin_message_button"
                         onClick={() => {
                           unpinMessage(message);
                           setMessageOptions(!messageOptions);
                         }}
                       >
-                        <span className="suggest_task_button">
+                        <span className="unpin_message_text">
                           Unpin Message
                         </span>
                       </li>

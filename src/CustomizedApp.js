@@ -8,7 +8,7 @@ import {
 } from "@sendbird/uikit-react/";
 import CustomizedMessageItem from "./CustomizedMessageItem";
 import CustomizedMessageInput from "./CustomizedMessageInput";
-import SettingsPinnedMessagesOption from "./SettingsPinnedMessagesOption";
+import SettingsPinnedMessagesOption from "./MessageItems/SettingsPinnedMessagesOption";
 
 function CustomizedApp({ userId, sb }) {
   const [showSettings, setShowSettings] = useState(false);
